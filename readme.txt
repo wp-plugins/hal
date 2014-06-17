@@ -20,7 +20,7 @@ HAL plugin data are directly related to HAL website (http://hal.archives-ouverte
 Installation procedure:
 
 1. Deactivate plugin if you have the previous version installed.
-2. Unzip "HAL" archive and put all files into a folder like "/wp-content/plugins/wp-hal" directory.
+2. Unzip "HAL" archive and put all files into a folder like "/wp-content/plugins/hal" directory.
 3. Activate "HAL" plugin via 'Plugins' menu in WordPress admin menu.
 
 For the page :
