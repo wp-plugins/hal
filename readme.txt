@@ -24,10 +24,12 @@ Installation procedure:
 3. Activate "HAL" plugin via 'Plugins' menu in WordPress admin menu.
 
 For the page :
+
 4. Go to the "Hal" menu item and select parameters to display options needed in your blog.
 5. Create your page and add the shortcode "cv-hal" to see publications and metadata.
 
 For the widget :
+
 4. Go to the "Appearance", "Widgets" to configure the widget "Lastest Publications".
 
 == Frequently Asked Questions ==
