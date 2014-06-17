@@ -38,6 +38,10 @@ For the widget :
 
 You can contact the support at this adress : http://support.ccsd.cnrs.fr/
 
+= How to display the page on the site ? =
+
+You need to create your own page with wordpress and put the short code [cv-hal] on the content.
+
 == Screenshots ==
 
 1. Screenshot settings page in admin menu
