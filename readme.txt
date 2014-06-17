@@ -30,7 +30,7 @@ For the page :
 
 For the widget :
 
-4. Go to the "Appearance", "Widgets" to configure the widget "Lastest Publications".
+4. Go to the menu "Appearance", "Widgets" to configure the widget "Lastest Publications".
 
 == Frequently Asked Questions ==
 
@@ -40,7 +40,7 @@ You can contact the support at this adress : http://support.ccsd.cnrs.fr/
 
 == Screenshots ==
 
-1. screenshot-1.png //Screenshot settings page in admin menu
+1. Screenshot settings page in admin menu
 2. screenshot-2.png //Screenshot widget settings in admin menu
 3. screenshot-3.png //Screenshot example page client
 
