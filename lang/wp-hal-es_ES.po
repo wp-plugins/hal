@@ -1,0 +1,190 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-hal\n"
+"POT-Creation-Date: 2014-06-03 10:50+0100\n"
+"PO-Revision-Date: 2014-06-03 11:16+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: __;gettext;gettext_noop;_n\n"
+"X-Poedit-Basepath: /opt/lampp/apps/wordpress/htdocs/wp-content/plugins/wp-"
+"hal\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wp-hal.php:15
+msgid ""
+"Crée une page qui remonte les publications d'un auteur ou d'une structure en "
+"relation avec HAL et un widget des dernières publications d'un auteur ou "
+"d'une structure."
+msgstr ""
+"Crear una página que muestra las publicaciones de un autor o de una "
+"estructura en relación con HAL y un widget de las últimas publicaciones de "
+"un autor o de una estructura."
+
+#: wp-hal.php:41
+msgid "Paramètres"
+msgstr "Parámetros"
+
+#: wp-hal.php:99 wp-hal.php:504
+msgid "Publications"
+msgstr "Publicaciones"
+
+#: wp-hal.php:101
+msgid "Filtres"
+msgstr "Metadatos"
+
+#: wp-hal.php:105 wp-hal.php:137 wp-hal.php:922
+msgid "Contact"
+msgstr "Contacto"
+
+#: wp-hal.php:108 wp-hal.php:160 wp-hal.php:923
+msgid "Disciplines"
+msgstr "Disciplinas"
+
+#: wp-hal.php:111 wp-hal.php:191 wp-hal.php:924
+msgid "Mots-clefs"
+msgstr "Palabras clave"
+
+#: wp-hal.php:114 wp-hal.php:235 wp-hal.php:925
+msgid "Auteurs"
+msgstr "Autores"
+
+#: wp-hal.php:117 wp-hal.php:273 wp-hal.php:926
+msgid "Revues"
+msgstr "Revistas"
+
+#: wp-hal.php:120 wp-hal.php:311 wp-hal.php:927
+msgid "Année de production"
+msgstr "Año de producción"
+
+#: wp-hal.php:123 wp-hal.php:349 wp-hal.php:928
+msgid "Institutions"
+msgstr "Instituciones"
+
+#: wp-hal.php:126 wp-hal.php:388 wp-hal.php:929
+msgid "Laboratoires"
+msgstr "Laboratorios"
+
+#: wp-hal.php:129 wp-hal.php:427 wp-hal.php:930
+msgid "Départements"
+msgstr "Departamentos"
+
+#: wp-hal.php:132 wp-hal.php:466 wp-hal.php:931
+msgid "Équipes de recherche"
+msgstr "Equipos de investigación"
+
+#: wp-hal.php:187 wp-hal.php:725
+msgid "Graphique"
+msgstr "Gráfico"
+
+#: wp-hal.php:231 wp-hal.php:268 wp-hal.php:306 wp-hal.php:344 wp-hal.php:383
+#: wp-hal.php:422 wp-hal.php:461 wp-hal.php:499 wp-hal.php:725
+msgid "Liste complète"
+msgstr "Lista completa "
+
+#: wp-hal.php:510 wp-hal.php:540
+msgid "Nombre de documents"
+msgstr "Número de documentos"
+
+#: wp-hal.php:525
+msgid "document"
+msgid_plural "documents"
+msgstr[0] "documento"
+msgstr[1] "documentos"
+
+#: wp-hal.php:668
+msgid "Documents récupérés de l'archive ouverte HAL"
+msgstr "Respaldado por HAL"
+
+#: wp-hal.php:725
+msgid "Liste"
+msgstr "Lista"
+
+#: wp-hal.php:725
+msgid "Liste principale"
+msgstr "Lista principal"
+
+#: wp-hal.php:725
+msgid "Nuage de mots"
+msgstr "Nube de palabras"
+
+#: wp-hal.php:778
+msgid "Afficher les dernières publications d'un auteur ou d'une structure."
+msgstr "Mostrar las últimas publicaciones de un autor o de una estructura."
+
+#: wp-hal.php:781 wp-hal.php:836
+msgid "Publications récentes"
+msgstr "Últimas publicaciones"
+
+#: wp-hal.php:842
+msgid "Titre :"
+msgstr "Titulo :"
+
+#: wp-hal.php:847 wp-hal.php:905
+msgid "(Exemple : laurent-capelli)"
+msgstr "(Ejemplo : laurent-capelli)"
+
+#: wp-hal.php:848 wp-hal.php:906
+msgid "(Exemple : 129)"
+msgstr "(Ejemplo : 129)"
+
+#: wp-hal.php:849 wp-hal.php:907
+msgid "(Exemple : 1646)"
+msgstr "(Ejemplo : 1646)"
+
+#: wp-hal.php:850 wp-hal.php:908
+msgid "(Exemple : 17877)"
+msgstr "(Ejemplo : 17877)"
+
+#: wp-hal.php:851 wp-hal.php:909
+msgid "(Exemple : TICE2014)"
+msgstr "(Ejemplo : TICE2014)"
+
+#: wp-hal.php:891
+msgid "Plugin HAL"
+msgstr "Plugin HAL"
+
+#: wp-hal.php:900
+msgid "Paramètre de la page :"
+msgstr "Parámetro página :"
+
+#: wp-hal.php:903
+msgid "Type d'Id"
+msgstr "Clase de Id"
+
+#: wp-hal.php:915
+msgid "Affichage des documents"
+msgstr "Visualización de documentos"
+
+#: wp-hal.php:916
+msgid "Documents avec pagination"
+msgstr "Documentos con paginación"
+
+#: wp-hal.php:917
+msgid "Documents groupés par type"
+msgstr "Documentos agrupados por tipo"
+
+#: wp-hal.php:921
+msgid "Choix des éléments menu"
+msgstr "Elección elementos del menu"
+
+#: wp-hal.php:935
+msgid "Contact :"
+msgstr "Contacto :"
+
+#: wp-hal.php:938
+msgid "Email"
+msgstr "Email"
+
+#: wp-hal.php:942
+msgid "Téléphone"
+msgstr "Teléfono"
+
+#: wp-hal.php:964
+msgid "Enregistrer"
+msgstr "Registrar"
