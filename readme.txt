@@ -41,8 +41,8 @@ You can contact the support at this adress : http://support.ccsd.cnrs.fr/
 == Screenshots ==
 
 1. Screenshot settings page in admin menu
-2. screenshot-2.png //Screenshot widget settings in admin menu
-3. screenshot-3.png //Screenshot example page client
+2. Screenshot widget settings in admin menu
+3. Screenshot example page client
 
 == Changelog ==
 
