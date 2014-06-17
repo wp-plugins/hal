@@ -19,11 +19,16 @@ HAL plugin data are directly related to HAL website (http://hal.archives-ouverte
 
 Installation procedure:
 
-Attention! Starting from version 1.0 plugin works with WordPress 3.3 and higher only.
 1. Deactivate plugin if you have the previous version installed.
 2. Unzip "HAL" archive and put all files into a folder like "/wp-content/plugins/wp-hal" directory.
 3. Activate "HAL" plugin via 'Plugins' menu in WordPress admin menu.
+
+For the page :
 4. Go to the "Hal" menu item and select parameters to display options needed in your blog.
+5. Create your page and add the shortcode "cv-hal" to see publications and metadata.
+
+For the widget :
+4. Go to the "Appearance", "Widgets" to configure the widget "Lastest Publications".
 
 == Frequently Asked Questions ==
 
