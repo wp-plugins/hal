@@ -842,7 +842,7 @@ class wphal_widget extends WP_widget{
 
         $content = '<ul>';
         for ($i = 0; $i < $num; $i++){
-            $content .= '<li class="liwidget"><a href="' . $json->response->docs[$i]->uri_s . '" target="_blank">' . $json->response->docs[$i]->title_s[0] . '</a></li>';
+            $content .= '<li"><a href="' . $json->response->docs[$i]->uri_s . '" target="_blank">' . $json->response->docs[$i]->title_s[0] . '</a></li>';
         }
         $content .= '</ul>';
 
