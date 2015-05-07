@@ -708,12 +708,14 @@ function wp_adding_style() {
 
 function wp_adding_script() {
     wp_register_script('wp-hal-script1', plugins_url('/js/bootstrap.js', __FILE__));
+    wp_register_script('wp-hal-script2',plugins_url('/js/highcharts.js', __FILE__));
     wp_register_script('wp-hal-script3',plugins_url('/js/jquery.jqplot.js', __FILE__));
     wp_register_script('wp-hal-script4',plugins_url('/js/jqplot.pieRenderer.js', __FILE__));
     wp_register_script('wp-hal-script5',plugins_url('/js/cv-hal.js', __FILE__));
 
     wp_enqueue_script("jquery");
     wp_enqueue_script('wp-hal-script1');
+    wp_enqueue_script('wp-hal-script2');
     wp_enqueue_script('wp-hal-script3');
     wp_enqueue_script('wp-hal-script4');
     wp_enqueue_script('wp-hal-script5');
