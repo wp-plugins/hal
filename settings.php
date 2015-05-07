@@ -10,16 +10,16 @@
 define('delimiter', '_FacetSep_');
 
 // Constante pour l'api utilisé
-define('api', 'http://api-preprod.archives-ouvertes.fr/search/index/');
+define('api', 'http://api.archives-ouvertes.fr/search/index/');
 
 // Constante pour le webservice des docType utilisé
-define('urltype', 'http://api-test.archives-ouvertes.fr/ref/docType/wt/json2');
+define('urltype', 'http://api.archives-ouvertes.fr/ref/docType/wt/json2');
 
 // Constante pour la redirection vers le site halv3 onglet recherche
-define('halv3', 'https://halv3-preprod.archives-ouvertes.fr/search/index/');
+define('halv3', 'https://hal.archives-ouvertes.fr/search/index/');
 
 // Constante pour la redirection vers le site halv3 onglet accueil
-define('site', 'https://halv3-preprod.archives-ouvertes.fr/');
+define('site', 'https://hal.archives-ouvertes.fr/');
 
 // Constante pour le tri par date
 define('producedDateY', urlencode('producedDateY_i desc'));
