@@ -23,3 +23,6 @@ define('site', 'https://hal.archives-ouvertes.fr/');
 
 // Constante pour le tri par date
 define('producedDateY', urlencode('producedDateY_i desc'));
+
+// Constante de langue
+define('WPLANG', get_locale());
