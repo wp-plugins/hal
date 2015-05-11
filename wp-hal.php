@@ -540,13 +540,9 @@ function cv_hal(){
 
         $content .= '<ul style="list-style-type: none;">';
         for($i=0; $json->grouped->docType_s->groups[$i] != null ; $i++){
-            foreach ($jsontype as $j => $res){
-                if ($json->grouped->docType_s->groups[$i]->groupValue == $j){
-                    if (locale == "fr_FR"){
-                        $titre = $res->fr;
-                    } else {
-                        $titre = $res->en;
-                    }
+            for($d=0; $jsontype->response->result->doc[$d] != null; $d++ ){
+                if ($json->grouped->docType_s->groups[$i]->groupValue == $jsontype->response->result->doc[$d]->str[0]){
+                    $titre=$jsontype->response->result->doc[$d]->str[1];
                 }
             }
             $content .= '<li><div class="doc-group"><h3 class="doc-header">' . $titre . '<small class="doc-nb">' . $json->grouped->docType_s->groups[$i]->doclist->numFound .' ' . _n('document','documents',$json->grouped->docType_s->groups[$i]->doclist->numFound,'wp-hal') .'</small></h3>';
