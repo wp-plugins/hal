@@ -25,4 +25,4 @@ define('site', 'https://hal.archives-ouvertes.fr/');
 define('producedDateY', urlencode('producedDateY_i desc'));
 
 // Constante de langue
-define('WPLANG', get_locale());
+define('locale', get_locale());

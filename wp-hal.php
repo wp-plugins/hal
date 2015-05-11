@@ -18,9 +18,9 @@ __("Crée une page qui remonte les publications d'un auteur ou d'une structure e
 require_once("settings.php");
 
 
-if (WPLANG == 'fr_FR') {
+if (locale == 'fr_FR') {
     define('lang', 'fr_');
-} elseif (WPLANG == 'es_ES') {
+} elseif (locale == 'es_ES') {
     define('lang', 'es_');
 } else {
     define('lang', 'en_');
@@ -161,9 +161,9 @@ function cv_hal(){
         <div class="tab-pane" id="disciplines">
             <h3>' . __('Disciplines','wp-hal').'</h3>';
 
-    if (WPLANG == 'fr_FR') {
+    if (locale == 'fr_FR') {
         $facetdomain = $json->facet_counts->facet_fields->fr_domainAllCodeLabel_fs;
-    } elseif (WPLANG == 'es_ES') {
+    } elseif (locale == 'es_ES') {
         $facetdomain = $json->facet_counts->facet_fields->es_domainAllCodeLabel_fs;
     } else {
         $facetdomain = $json->facet_counts->facet_fields->en_domainAllCodeLabel_fs;
@@ -542,7 +542,7 @@ function cv_hal(){
         for($i=0; $json->grouped->docType_s->groups[$i] != null ; $i++){
             foreach ($jsontype as $j => $res){
                 if ($json->grouped->docType_s->groups[$i]->groupValue == $j){
-                    if (WPLANG == "fr_FR"){
+                    if (locale == "fr_FR"){
                         $titre = $res->fr;
                     } else {
                         $titre = $res->en;
@@ -736,11 +736,11 @@ function wp_adding_script() {
     // Récupération du résultat JSON
     $json = json_decode(curl_exec($ch));
     curl_close($ch);
-    if (WPLANG == 'fr_FR') {
+    if (locale == 'fr_FR') {
         $facetdomain = $json->facet_counts->facet_fields->fr_domainAllCodeLabel_fs;
-    } elseif (WPLANG == 'en_US') {
+    } elseif (locale == 'en_US') {
         $facetdomain = $json->facet_counts->facet_fields->en_domainAllCodeLabel_fs;
-    } elseif (WPLANG == 'es_ES') {
+    } elseif (locale == 'es_ES') {
         $facetdomain = $json->facet_counts->facet_fields->es_domainAllCodeLabel_fs;
     } else {
         $facetdomain = $json->facet_counts->facet_fields->eu_domainAllCodeLabel_fs;
