@@ -13,7 +13,7 @@ define('delimiter', '_FacetSep_');
 define('api', 'http://api.archives-ouvertes.fr/search/index/');
 
 // Constante pour le webservice des docType utilisé
-define('urltype', 'http://api.archives-ouvertes.fr/ref/docType/wt/json2');
+define('urltype', 'http://api.archives-ouvertes.fr/ref/docType/wt/json');
 
 // Constante pour la redirection vers le site halv3 onglet recherche
 define('halv3', 'https://hal.archives-ouvertes.fr/search/index/');
