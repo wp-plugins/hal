@@ -1,6 +1,6 @@
 === HAL ===
 Contributors: Baptiste Blondelle
-Tags: publication, HAL, archive
+, ccsdTags: publication, HAL, archive
 Requires at least: 3.3
 Tested up to: 3.9
 Stable tag: 3.9
