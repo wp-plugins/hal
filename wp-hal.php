@@ -217,7 +217,7 @@ function cv_hal(){
         asort($tab); // Tri du tableau par ordre alphabétique
         foreach ($tab as $res){
             $size= round($minsize + (($res[1]- $minval)*$step));
-            $content .= '<a style="font-size:'.$size.'px" href="'. halv3 .'?q=keyword_s:' . urlencode('"'.$res[0].'"') . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $res[0] . '</a>&nbsp;';
+            $content .= '<a style="display: inline-block; font-size:'.$size.'px" href="'. halv3 .'?q=keyword_s:' . urlencode('"'.$res[0].'"') . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $res[0] . '</a>&nbsp;';
         }
         $content .= '</div>';
         $content .= '<div id="keysuite" style="display:none;">';
