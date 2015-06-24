@@ -1,7 +1,7 @@
 === HAL ===
 Contributors: friz, ccsd
 Tags: publication, HAL, archive
-Requires at least: 3.3
+Requires at least: 4.0
 Tested up to: 4.2
 Stable tag: 4.2
 License: GPLv2 or later
