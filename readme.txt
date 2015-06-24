@@ -17,6 +17,10 @@ HAL plugin data are directly related to HAL website (http://hal.archives-ouverte
 
 == Installation ==
 
+Requires :
+-PHP 5.5 or higher
+-WordPress 4.0 or higher
+
 Installation procedure:
 
 1. Desactivate plugin if you have the previous version installed.
