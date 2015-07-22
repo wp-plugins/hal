@@ -15,7 +15,7 @@
 __("Crée une page qui remonte les publications d'un auteur ou d'une structure en relation avec HAL et un widget des dernières publications d'un auteur ou d'une structure.", "wp-hal");
 
 //Récupère les constantes
-require_once("settings.php");
+require_once("constantes.php");
 
 
 if (locale == 'fr_FR') {
