@@ -3,7 +3,7 @@ Contributors: friz, ccsd
 Tags: publication, HAL, archive
 Requires at least: 4.0
 Tested up to: 4.2
-Stable tag: 4.2
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,7 +54,10 @@ You need to create your own page with wordpress and put the shortcode [cv-hal] o
 
 == Changelog ==
 
-Nothing for the moment...
+1.1
+Release Date - 7 September 2015
+- Bootstrap library deleted
+- New appearance for the plugin
 
 == Upgrade Notice ==
 

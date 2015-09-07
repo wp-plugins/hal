@@ -1,32 +1,22 @@
 /**
-* Created by baptiste on 18/04/14.
-*/
+ * Created by baptiste on 18/04/14.
+ */
 
 
 jQuery(document).ready(function() {
-    jQuery('.nav-pills [data-toggle="collapse"]').on('click', function () {
-        //Prevent the subnav from collapsing
-        if (jQuery(jQuery(this).attr('href')).hasClass('in')) return false;
-        //Make collapse links act like tabs
-        jQuery(this).parent().addClass('active').siblings('li').removeClass('active');
-        //Activate first subtab
-        jQuery(jQuery(this).attr('href')).find('[data-toggle="tab"]').first().tab('show');
-    });
-
-    jQuery('.nav-pills > li > a').on('click', function () {
-        //Hide any open subnav only if it's not the collapse link
-        //also deactivate any active subtab
-        if (jQuery(this).data('toggle') != 'collapse') {
-            jQuery(this).closest('.nav-pills').find('.collapse').collapse('hide').find('.active').removeClass('active');
-        }
-    });
     jQuery('.btn[data-toggle*="tooltip"]').each(function(){
         jQuery(this).tooltip();
     });
 });
 
 
-
+function displayElem(e)
+{
+    var targetElement;
+    targetElement = document.getElementById(e);
+    jQuery('.display').hide();
+    targetElement.style.display = "inline";
+}
 
 function visibilite(thingId)
 {
@@ -34,14 +24,14 @@ function visibilite(thingId)
     targetElement = document.getElementById(thingId) ;
     if (targetElement.style.display == "none")
     {
-    targetElement.style.display = "inline" ;
+        targetElement.style.display = "inline" ;
     } else {
-    targetElement.style.display = "none" ;
+        targetElement.style.display = "none" ;
     }
-if (document.getElementById('auteur').innerHTML== translate.compl){
-    document.getElementById('auteur').innerHTML= translate.princ;
+    if (document.getElementById('auteur').innerHTML== translate.compl){
+        document.getElementById('auteur').innerHTML= translate.princ;
     } else {
-    document.getElementById('auteur').innerHTML= translate.compl;
+        document.getElementById('auteur').innerHTML= translate.compl;
     }
 }
 
@@ -150,7 +140,7 @@ function visibiliteequipe(idequipe)
 function visibilitedisci(iddisci,idgraph,idtri)
 {
     var data = jQuery.parseJSON(WPWallSettings);
-    var plot1 = jQuery.jqplot ('toto', [data],
+    var plot1 = jQuery.jqplot ('piedisci', [data],
         {
             grid: {
                 drawBorder: false,
@@ -158,22 +148,19 @@ function visibilitedisci(iddisci,idgraph,idtri)
                 background: '#ffffff',
                 shadow:false
             },
-            axesDefaults: {
-
+            highlighter: {
+                show:true,
+                formatString: "%s<br><div style='display:none'>%d</div>%s",
+                tooltipLocation: 'ne',
+                useAxesFormatters: false
             },
             seriesDefaults:{
+                shadow : false,
                 renderer:jQuery.jqplot.PieRenderer,
                 rendererOptions: {
+                    startAngle:-90,
                     showDataLabels: true
                 }
-            },
-            legend: {
-                show: true,
-                rendererOptions: {
-                    numberRows: '5',
-                    numberColumns: '1'
-                },
-                location: 's'
             }
         }
     );
@@ -211,18 +198,18 @@ function visibilitekey(idkey,idsuite,idtri)
     targetElement = document.getElementById(idsuite) ;
     if (targetElement.style.display == "none")
     {
-    keyElement.style.display = "none" ;
-    targetElement.style.display = "";
-    tri.style.display = "" ;
+        keyElement.style.display = "none" ;
+        targetElement.style.display = "";
+        tri.style.display = "" ;
     } else {
-    targetElement.style.display = "none";
-    keyElement.style.display = "";
-    tri.style.display = "none" ;
+        targetElement.style.display = "none";
+        keyElement.style.display = "";
+        tri.style.display = "none" ;
     }
-if (document.getElementById('key').innerHTML== translate.compl){
-    document.getElementById('key').innerHTML= translate.nuage;
+    if (document.getElementById('key').innerHTML== translate.compl){
+        document.getElementById('key').innerHTML= translate.nuage;
     } else {
-    document.getElementById('key').innerHTML= translate.compl;
+        document.getElementById('key').innerHTML= translate.compl;
     }
 }
 
@@ -249,57 +236,39 @@ function toggleSort(e, b, div, divsuite, bouton)
 
 function triAZ(div, divsuite, bouton){
     var jQuerywrapper = jQuery('#'+div);
-    var nb = jQuery('#'+divsuite).find('.test').length;
+    var nb = jQuery('#'+divsuite).find('.metadata').length;
 
-    jQuerywrapper.find('.test').sort(function (a, b) {
+    jQuerywrapper.find('.metadata').sort(function (a, b) {
         return jQuery(a).text().toUpperCase().localeCompare(
             jQuery(b).text().toUpperCase());
     })
         .appendTo( jQuerywrapper );
 
-    jQuerywrapper.find('.test').slice(jQuerywrapper.find('.test').length - nb).appendTo(jQuerywrapper.find('#'+divsuite));
+    jQuerywrapper.find('.metadata').slice(jQuerywrapper.find('.metadata').length - nb).appendTo(jQuerywrapper.find('#'+divsuite));
     jQuerywrapper.find('#'+divsuite).appendTo(jQuerywrapper);
-
-    jQuery('#'+bouton).find('span').removeClass('glyphicon-sort-by-alphabet');
-    jQuery('#'+bouton).find('span').addClass('glyphicon-sort-by-alphabet-alt');
-
-    //exception pour annee de production
-    if(bouton == 'trian'){
-        jQuery('#'+bouton).find('span').removeClass('glyphicon-sort-by-order');
-        jQuery('#'+bouton).find('span').addClass('glyphicon-sort-by-order-alt');
-    }
 
 }
 
 function triZA(div, divsuite, bouton){
     var jQuerywrapper = jQuery('#'+div);
-    var nb = jQuery('#'+divsuite).find('.test').length;
+    var nb = jQuery('#'+divsuite).find('.metadata').length;
 
-    jQuerywrapper.find('.test').sort(function (a, b) {
+    jQuerywrapper.find('.metadata').sort(function (a, b) {
         return jQuery(b).text().toUpperCase().localeCompare(
             jQuery(a).text().toUpperCase());
     })
         .appendTo( jQuerywrapper );
 
-    jQuerywrapper.find('.test').slice(jQuerywrapper.find('.test').length - nb).appendTo(jQuerywrapper.find('#'+divsuite));
+    jQuerywrapper.find('.metadata').slice(jQuerywrapper.find('.metadata').length - nb).appendTo(jQuerywrapper.find('#'+divsuite));
     jQuerywrapper.find('#'+divsuite).appendTo(jQuerywrapper);
-
-    jQuery('#'+bouton).find('span').removeClass('glyphicon-sort-by-alphabet-alt');
-    jQuery('#'+bouton).find('span').addClass('glyphicon-sort-by-alphabet');
-
-    //exception pour annee de production
-    if(bouton == 'trian'){
-        jQuery('#'+bouton).find('span').removeClass('glyphicon-sort-by-order-alt');
-        jQuery('#'+bouton).find('span').addClass('glyphicon-sort-by-order');
-    }
 }
 
 function triNB(div, divsuite, bouton){
     var jQuerywrapper = jQuery('#'+div);
-    var nb = jQuery('#'+divsuite).find('.test').length;
+    var nb = jQuery('#'+divsuite).find('.metadata').length;
 
 
-    jQuerywrapper.find('.test').sort(function (a, b) {
+    jQuerywrapper.find('.metadata').sort(function (a, b) {
         if (+a.dataset.percentage > +b.dataset.percentage)
             return -1;
         if ( +a.dataset.percentage < +b.dataset.percentage )
@@ -308,20 +277,16 @@ function triNB(div, divsuite, bouton){
     })
         .appendTo( jQuerywrapper );
 
-    jQuerywrapper.find('.test').slice(jQuerywrapper.find('.test').length - nb).appendTo(jQuerywrapper.find('#'+divsuite));
+    jQuerywrapper.find('.metadata').slice(jQuerywrapper.find('.metadata').length - nb).appendTo(jQuerywrapper.find('#'+divsuite));
     jQuerywrapper.find('#'+divsuite).appendTo(jQuerywrapper);
-
-    jQuery('#'+bouton).find('span').removeClass('glyphicon-sort-by-order-alt');
-    jQuery('#'+bouton).find('span').addClass('glyphicon-sort-by-order');
-
 
 }
 
 function triBN(div, divsuite, bouton){
     var jQuerywrapper = jQuery('#'+div);
-    var nb = jQuery('#'+divsuite).find('.test').length;
+    var nb = jQuery('#'+divsuite).find('.metadata').length;
 
-    jQuerywrapper.find('.test').sort(function (a, b) {
+    jQuerywrapper.find('.metadata').sort(function (a, b) {
         if (+a.dataset.percentage > +b.dataset.percentage)
             return 1;
         if ( +a.dataset.percentage < +b.dataset.percentage )
@@ -330,11 +295,8 @@ function triBN(div, divsuite, bouton){
     })
         .appendTo( jQuerywrapper );
 
-    jQuerywrapper.find('.test').slice(jQuerywrapper.find('.test').length - nb).appendTo(jQuerywrapper.find('#'+divsuite));
+    jQuerywrapper.find('.metadata').slice(jQuerywrapper.find('.metadata').length - nb).appendTo(jQuerywrapper.find('#'+divsuite));
     jQuerywrapper.find('#'+divsuite).appendTo(jQuerywrapper);
-
-    jQuery('#'+bouton).find('span').removeClass('glyphicon-sort-by-order');
-    jQuery('#'+bouton).find('span').addClass('glyphicon-sort-by-order-alt');
 
 }
 

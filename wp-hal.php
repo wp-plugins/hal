@@ -1,14 +1,14 @@
 <?php
 /**
-* Plugin Name: HAL
-* Plugin URI: http://www.ccsd.cnrs.fr
-* Description: Crée une page qui remonte les publications d'un auteur ou d'une structure en relation avec HAL et un widget des dernières publications d'un auteur ou d'une structure.
-* Version: 1.0
-* Author: Baptiste Blondelle
-* Author URI: http://www.ccsd.cnrs.fr
-* Text Domain: wp-hal
-* Domain Path: /lang/
-*/
+ * Plugin Name: HAL
+ * Plugin URI: http://www.ccsd.cnrs.fr
+ * Description: Crée une page qui remonte les publications d'un auteur ou d'une structure en relation avec HAL et un widget des dernières publications d'un auteur ou d'une structure.
+ * Version: 1.0
+ * Author: Baptiste Blondelle
+ * Author URI: http://www.ccsd.cnrs.fr
+ * Text Domain: wp-hal
+ * Domain Path: /lang/
+ */
 
 
 // Traduction de la description
@@ -57,10 +57,10 @@ add_filter( 'plugin_action_links', 'hal_plugin_action_links',10,2);
 function cv_hal(){
 
     if (get_option('option_groupe')=='grouper'){
-    //cURL sur l'API pour récupérer les données
-    $url = api . '?q=*:*&fq='.get_option('option_type').':('. urlencode(get_option('option_idhal')).')&group=true&group.field=docType_s&group.limit=1000&fl=docid,citationFull_s&facet.field=' . lang .'domainAllCodeLabel_fs&facet.field=keyword_s&facet.field=journalIdTitle_fs&facet.field=producedDateY_i&facet.field=authIdLastNameFirstName_fs&facet.field=instStructIdName_fs&facet.field=labStructIdName_fs&facet.field=deptStructIdName_fs&facet.field=rteamStructIdName_fs&facet.mincount=1&facet=true&sort=' . producedDateY . '&wt=json&json.nl=arrarr';
+        //cURL sur l'API pour récupérer les données
+        $url = api . '?q=*:*&fq='.get_option('option_type').':('. urlencode(get_option('option_idhal')).')&group=true&group.field=docType_s&group.limit=1000&fl=docid,citationFull_s&facet.field=' . lang .'domainAllCodeLabel_fs&facet.field=keyword_s&facet.field=journalIdTitle_fs&facet.field=producedDateY_i&facet.field=authIdLastNameFirstName_fs&facet.field=instStructIdName_fs&facet.field=labStructIdName_fs&facet.field=deptStructIdName_fs&facet.field=rteamStructIdName_fs&facet.mincount=1&facet=true&sort=' . producedDateY . '&wt=json&json.nl=arrarr';
     } elseif (get_option('option_groupe')=='paginer'){
-    $url = api . '?q=*:*&fq='.get_option('option_type').':('.urlencode(get_option('option_idhal')).')&fl=docid,citationFull_s&facet.field=' . lang .'domainAllCodeLabel_fs&facet.field=keyword_s&facet.field=journalIdTitle_fs&facet.field=producedDateY_i&facet.field=authIdLastNameFirstName_fs&facet.field=instStructIdName_fs&facet.field=labStructIdName_fs&facet.field=deptStructIdName_fs&facet.field=rteamStructIdName_fs&facet.mincount=1&facet=true&sort=' . producedDateY . '&wt=json&json.nl=arrarr';
+        $url = api . '?q=*:*&fq='.get_option('option_type').':('.urlencode(get_option('option_idhal')).')&fl=docid,citationFull_s&facet.field=' . lang .'domainAllCodeLabel_fs&facet.field=keyword_s&facet.field=journalIdTitle_fs&facet.field=producedDateY_i&facet.field=authIdLastNameFirstName_fs&facet.field=instStructIdName_fs&facet.field=labStructIdName_fs&facet.field=deptStructIdName_fs&facet.field=rteamStructIdName_fs&facet.mincount=1&facet=true&sort=' . producedDateY . '&wt=json&json.nl=arrarr';
     }
 
     $ch = curl_init($url);
@@ -94,71 +94,70 @@ function cv_hal(){
 
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-    $content = '
-<div id="content-plugin">
-    <ul id="tabs" class="nav nav-pills">';
-    $content .= '<li class="active"><a href="#publications" data-toggle="tab" style="font-size:18px; text-decoration: none;">' . __('Publications', 'wp-hal'). '</a></li>';
-    $content .= '<li><a href="#filtres" data-toggle="collapse" style="font-size:18px; text-decoration: none;">' . __('Filtres', 'wp-hal'). '<span class="caret"></span></a></li><li>';
-    $content .= '<ul class="nav nav-pills collapse" id="filtres">';
+    $content = '<div id="content-plugin">
+    <ul id="menu">';
+    $content .= '<li><a href="#publications" onclick="displayElem(\'publications\'); return false;" style="font-size:18px; text-decoration: none;">' . __('Publications', 'wp-hal'). '</a></li>';
+    $content .= '<li><a href="#filtres" onclick="return false;" style="font-size:18px; text-decoration: none; cursor:default;">' . __('Filtres', 'wp-hal'). '</a>';
+    $content .= '<ul id="filtres">';
     if (get_option('option_choix')[1] == 'contact') {
-        $content .= '<li><a class="subnavtab" href="#contact" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Contact', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#contact" onclick="displayElem(\'contact\'); return false;" style="margin:1px; text-decoration: none;">' . __('Contact', 'wp-hal');
+        $content .= '</a></li>';}
     if (get_option('option_choix')[2] == 'disciplines') {
-        $content .= '<li><a class="subnavtab" href="#disciplines" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Disciplines', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#disciplines" onclick="displayElem(\'disciplines\'); return false;" style="margin:1px; text-decoration: none;">' . __('Disciplines', 'wp-hal');
+        $content .= '</a></li>';}
     if (get_option('option_choix')[3] == 'mots-clefs') {
-        $content .= '<li><a class="subnavtab" href="#keywords" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Mots-clefs', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#keywords" onclick="displayElem(\'keywords\'); return false;" style="margin:1px; text-decoration: none;">' . __('Mots-clefs', 'wp-hal');
+        $content .= '</a></li>';}
     if (get_option('option_choix')[4] == 'auteurs') {
-        $content .= '<li><a class="subnavtab" href="#auteurs" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Auteurs', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#auteurs" onclick="displayElem(\'auteurs\'); return false;" style="margin:1px; text-decoration: none;">' . __('Auteurs', 'wp-hal');
+        $content .= '</a></li>';}
     if (get_option('option_choix')[5] == 'revues') {
-        $content .= '<li><a class="subnavtab" href="#revues" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Revues', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#revues" onclick="displayElem(\'revues\'); return false;" style="margin:1px; text-decoration: none;">' . __('Revues', 'wp-hal');
+        $content .= '</a></li>';}
     if (get_option('option_choix')[6] == 'annee') {
-        $content .= '<li><a class="subnavtab" href="#annees" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Année de production', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#annees" onclick="displayElem(\'annees\'); return false;" style="margin:1px; text-decoration: none;">' . __('Année de production', 'wp-hal');
+        $content .= '</a></li>';}
     if (get_option('option_choix')[7] == 'institution') {
-        $content .= '<li><a class="subnavtab" href="#insts" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Institutions', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#insts" onclick="displayElem(\'insts\'); return false;" style="margin:1px; text-decoration: none;">' . __('Institutions', 'wp-hal');
+        $content .= '</a></li>';}
     if (get_option('option_choix')[8] == 'laboratoire') {
-        $content .= '<li><a class="subnavtab" href="#labs" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Laboratoires', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#labs" onclick="displayElem(\'labs\'); return false;" style="margin:1px; text-decoration: none;">' . __('Laboratoires', 'wp-hal');
+        $content .= '</a></li>';}
     if (get_option('option_choix')[9] == 'departement') {
-        $content .= '<li><a class="subnavtab" href="#depts" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Départements', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#depts" onclick="displayElem(\'depts\'); return false;" style="margin:1px; text-decoration: none;">' . __('Départements', 'wp-hal');
+        $content .= '</a></li>';}
     if (get_option('option_choix')[10] == 'equipe') {
-        $content .= '<li><a class="subnavtab" href="#equipes" data-toggle="tab" style="margin:1px; text-decoration: none;">' . __('Équipes de recherche', 'wp-hal');
-    $content .= '</a></li>';}
+        $content .= '<li><a href="#equipes" onclick="displayElem(\'equipes\'); return false;" style="margin:1px; text-decoration: none;">' . __('Équipes de recherche', 'wp-hal');
+        $content .= '</a></li>';}
     $content .= '</ul></li>';
     $content .= '</ul><br/><hr>';
 
-    $content .= '<div id="my-tab-content" class="tab-content">
-        <div class="tab-pane" id="contact">
+    $content .= '<div id="meta">
+        <div class="display" id="contact" style="display: none;">
             <h3>' . __('Contact','wp-hal');  $content .= '</h3>
 
             <ul style="list-style-type: none;">';
-                if (get_option('option_email') != ''){
-                    $content .= '<li><img alt="mail" src=" ' . plugin_dir_url( __FILE__ ) . 'img/mail.svg" style=" width:16px; margin-left:2px; margin-right:2px;"/><a href="mailto:' . get_option('option_email') . '" target="_blank">' . get_option('option_email') . '</a></li>';
-                }
-                if (get_option('option_tel') != ''){
-                    $content .= '<li><img alt="phone" src=" ' . plugin_dir_url( __FILE__ ) . 'img/phone.svg" style="width:16px; margin-left:2px; margin-right:2px;"/>' . get_option('option_tel') . '</li>';
-                }
-                if (get_option('option_social0') != ''){
-                    $content .= '<li><a href="http://www.facebook.com/' . get_option('option_social0') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/facebook.svg" style="width:32px; margin:4px;"/></a>';
-                }
-                if (get_option('option_social1') != ''){
-                    $content .= '<a href="http://www.twitter.com/' . get_option('option_social1') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/twitter.svg" style="width:32px; margin:4px;"/></a>';
-                }
-                if (get_option('option_social2') != ''){
-                    $content .= '<a href="https://plus.google.com/u/0/+' . get_option('option_social2') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/google-plus.svg" style="width:32px; margin:4px;"/></a>';
-                }
-                if (get_option('option_social3') != ''){
-                    $content .= '<a href="http://sa.linkedin.com/pub/' . get_option('option_social3') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/linkedin.svg" style="width:32px; margin:4px;"/></a></li>';
-                }
-            $content .= '</ul>
+    if (get_option('option_email') != ''){
+        $content .= '<li><img alt="mail" src=" ' . plugin_dir_url( __FILE__ ) . 'img/mail.svg" style=" width:16px; margin-left:2px; margin-right:2px;"/><a href="mailto:' . get_option('option_email') . '" target="_blank">' . get_option('option_email') . '</a></li>';
+    }
+    if (get_option('option_tel') != ''){
+        $content .= '<li><img alt="phone" src=" ' . plugin_dir_url( __FILE__ ) . 'img/phone.svg" style="width:16px; margin-left:2px; margin-right:2px;"/>' . get_option('option_tel') . '</li>';
+    }
+    if (get_option('option_social0') != ''){
+        $content .= '<li><a href="http://www.facebook.com/' . get_option('option_social0') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/facebook.svg" style="width:32px; margin:4px;"/></a>';
+    }
+    if (get_option('option_social1') != ''){
+        $content .= '<a href="http://www.twitter.com/' . get_option('option_social1') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/twitter.svg" style="width:32px; margin:4px;"/></a>';
+    }
+    if (get_option('option_social2') != ''){
+        $content .= '<a href="https://plus.google.com/u/0/+' . get_option('option_social2') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/google-plus.svg" style="width:32px; margin:4px;"/></a>';
+    }
+    if (get_option('option_social3') != ''){
+        $content .= '<a href="http://sa.linkedin.com/pub/' . get_option('option_social3') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/linkedin.svg" style="width:32px; margin:4px;"/></a></li>';
+    }
+    $content .= '</ul>
         </div>
-        <div class="tab-pane" id="disciplines">
+        <div class="display" id="disciplines" style="display: none;">
             <h3>' . __('Disciplines','wp-hal').'</h3>';
 
     if (locale == 'fr_FR') {
@@ -172,29 +171,25 @@ function cv_hal(){
     if(!is_null($facetdomain)  && !empty($facetdomain)){
 
         $content .= '<div id="listdisci">';
-        $content .= '<ul class="discipline list-group">';
-        $content .= '<li class="list-group-item">';
         $content .= '<span id="tridisciplines">';
-        $content .= '<a class="btn btn-default btn-xs" data-placement="bottom" data-toggle="tooltip" data-original-title="Tri Alphabétique" href="" id="tridisci" onclick="javascript:toggleSort(this, true, \'discipline\', \'discipline\', \'tridisci\'); return false;" style="font-size:16px;  text-decoration: none;" ><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>';
-        $content .= '<a class="pull-right btn btn-default btn-xs"  data-placement="bottom" data-toggle="tooltip" data-original-title="Tri par Nombre d\'Occurences" href="" id="trinbdisci" onclick="javascript:toggleSort(this, false, \'discipline\', \'discipline\', \'trinbdisci\'); return false;" style="font-size:16px;  text-decoration: none;"><span class="glyphicon glyphicon-sort-by-order"></span></a>';
+        $content .= '<button type="button" class="trial" href="" id="tridisci" onclick="toggleSort(this, true, \'discipline\', \'discipline\', \'tridisci\'); return false;" style="font-size:16px;  text-decoration: none;" >Tri Alphabétique</button>';
+        $content .= '<button type="button" class="trioc" href="" id="trinbdisci" onclick="toggleSort(this, false, \'discipline\', \'discipline\', \'trinbdisci\'); return false;" style="font-size:16px;  text-decoration: none;">Tri Occurrence</button>';
         $content .= '</span>';
-        $content .= '</li>';
-        $content .= '<div id="discipline">';
+        $content .= '<ul id="discipline" class="discipline">';
         foreach ($facetdomain as $res){
             $name = explode(delimiter,$res[0]);
-            $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=domainAllCode_s:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">'.$name[1].'</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+            $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=domainAllCode_s:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">'.$name[1].'</a><span class="nbmetadata">' .$res[1]. '</span></li>';
         }
-        $content .= '</div>';
         $content .= '</ul>';
         $content .= '</div>';
 
         $content .= '<div id="graph" style="display:none;">';
-        $content .= '<div id="toto"></div>';
+        $content .= '<div id="piedisci"></div>';
         $content .= '</div>';
-        $content .= '<a class="btn btn-default btn-sm" href="" style="text-decoration: none;" id="disci" onclick="javascript:visibilitedisci(\'listdisci\',\'graph\',\'tridisciplines\'); return false;" >' . __('Graphique','wp-hal'); $content .= '</a> ';
+        $content .= '<button type="button" href="" style="text-decoration: none;" id="disci" onclick="visibilitedisci(\'listdisci\',\'graph\',\'tridisciplines\'); return false;" >' . __('Graphique','wp-hal'); $content .= '</button>';
     }
     $content .= '</div>
-        <div class="tab-pane" id="keywords">
+        <div class="display" id="keywords" style="display: none;">
             <h3>' . __('Mots-clefs','wp-hal').'</h3>';
     if(!is_null($json->facet_counts->facet_fields->keyword_s)  && !empty($json->facet_counts->facet_fields->keyword_s)){
         $content .= '<div id="keys">';
@@ -221,33 +216,29 @@ function cv_hal(){
         }
         $content .= '</div>';
         $content .= '<div id="keysuite" style="display:none;">';
-        $content .= '<ul class="keyword list-group">';
-        $content .= '<li class="list-group-item">';
         $content .= '<span id="trikeywords">';
-        $content .= '<a class="btn btn-default btn-xs" data-placement="bottom" data-toggle="tooltip" data-original-title="Tri Alphabétique" href="" id="trikey" onclick="javascript:toggleSort(this, true, \'keyw\', \'keyword\', \'trikey\'); return false;" style="font-size:16px;  text-decoration: none;" ><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>';
-        $content .= '<a class="pull-right btn btn-default btn-xs"  data-placement="bottom" data-toggle="tooltip" data-original-title="Tri par Nombre d\'Occurences" href="" id="trinbkey" onclick="javascript:toggleSort(this, false, \'keyw\', \'keyword\', \'trinbkey\'); return false;" style="font-size:16px;  text-decoration: none;"><span class="glyphicon glyphicon-sort-by-order"></span></a>';
+        $content .= '<button type="button" class="trial" href="" id="trikey" onclick="toggleSort(this, true, \'keyw\', \'keyword\', \'trikey\'); return false;" style="font-size:16px;  text-decoration: none;" >Tri Alphabétique</button>';
+        $content .= '<button type="button" class="trioc" href="" id="trinbkey" onclick="toggleSort(this, false, \'keyw\', \'keyword\', \'trinbkey\'); return false;" style="font-size:16px;  text-decoration: none;">Tri Occurrence</button>';
         $content .= '</span>';
-        $content .= '</li>';
+        $content .= '<ul class="keyword">';
         $content .= '<div id="keyw">';
         foreach ($json->facet_counts->facet_fields->keyword_s as $res){
-            $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=keyword_s:'.urlencode('"'.$res[0].'"'). "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $res[0] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+            $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=keyword_s:'.urlencode('"'.$res[0].'"'). "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $res[0] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
         }
         $content .= '</div>';
         $content .= '</ul>';
         $content .= '</div>';
-        $content .= '<a class="btn btn-default btn-sm" href="" style="text-decoration: none;" id="key" onclick="javascript:visibilitekey(\'keys\',\'keysuite\', \'trikeywords\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</a> ';
+        $content .= '<button type="button" href="" style="text-decoration: none;" id="key" onclick="visibilitekey(\'keys\',\'keysuite\', \'trikeywords\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</button>';
     }
     $content .= '</div>
-        <div class="tab-pane" id="auteurs">
+        <div class="display" id="auteurs" style="display: none;">
             <h3>' . __('Auteurs','wp-hal').'</h3>';
     if(!is_null($json->facet_counts->facet_fields->authIdLastNameFirstName_fs)  && !empty($json->facet_counts->facet_fields->authIdLastNameFirstName_fs)){
-        $content .= '<ul class="auteurs list-group" style="list-style-type: none;">';
-        $content .= '<li class="list-group-item">';
+        $content .= '<ul class="auteurs" style="list-style-type: none;">';
         $content .= '<span id="triauteurs">';
-        $content .= '<a class="btn btn-default btn-xs" data-placement="bottom" data-toggle="tooltip" data-original-title="Tri Alphabétique" href="" id="triaut" onclick="javascript:toggleSort(this, true, \'aut\', \'auteursuite\', \'triaut\'); return false;" style="font-size:16px;  text-decoration: none;" ><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>';
-        $content .= '<a class="pull-right btn btn-default btn-xs"  data-placement="bottom" data-toggle="tooltip" data-original-title="Tri par Nombre d\'Occurences" href="" id="trinbaut" onclick="javascript:toggleSort(this, false, \'aut\', \'auteursuite\', \'trinbaut\'); return false;" style="font-size:16px;  text-decoration: none;"><span class="glyphicon glyphicon-sort-by-order"></span></a>';
+        $content .= '<button type="button" class="trial" href="" id="triaut" onclick="toggleSort(this, true, \'aut\', \'auteursuite\', \'triaut\'); return false;" style="font-size:16px;  text-decoration: none;" >Tri Alphabétique</button>';
+        $content .= '<button type="button" class="trioc" href="" id="trinbaut" onclick="toggleSort(this, false, \'aut\', \'auteursuite\', \'trinbaut\'); return false;" style="font-size:16px;  text-decoration: none;">Tri Occurrence</button>';
         $content .= '</span>';
-        $content .= '</li>';
         $content .= '<div id="aut">';
         $r = 0;
         foreach ($json->facet_counts->facet_fields->authIdLastNameFirstName_fs as $res){
@@ -256,7 +247,7 @@ function cv_hal(){
                 break;
             }
             $name = explode(delimiter,$res[0]);
-            $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><img alt="user" src=" ' . plugin_dir_url( __FILE__ ) . '/img/user.svg" style="width:16px; margin-left:2px; margin-right:2px;"/><a href="'. halv3 .'?q=authId_i:' . $name[0] . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+            $content .= '<li class="metadata" data-percentage="'.$res[1].'"><img alt="user" src=" ' . plugin_dir_url( __FILE__ ) . '/img/user.svg" style="width:16px; margin-left:2px; margin-right:2px;"/><a href="'. halv3 .'?q=authId_i:' . $name[0] . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
         }
         $i = 1;
         $content .= '<div id="auteursuite" style="display:none;">';
@@ -268,27 +259,25 @@ function cv_hal(){
                 $i = $i+1;
             } else {
                 $name = explode(delimiter,$res[0]);
-                $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><img alt="user" src=" ' . plugin_dir_url( __FILE__ ) . '/img/user.svg" style="width:16px; margin-left:2px; margin-right:2px;"/><a href="'. halv3 .'?q=authId_i:' . $name[0] . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+                $content .= '<li class="metadata" data-percentage="'.$res[1].'"><img alt="user" src=" ' . plugin_dir_url( __FILE__ ) . '/img/user.svg" style="width:16px; margin-left:2px; margin-right:2px;"/><a href="'. halv3 .'?q=authId_i:' . $name[0] . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
             }
         }
         $content .= '</div>';
         $content .= '</div>';
         $content .= '</ul>';
         if ($r > 10){
-            $content .= '<a class="btn btn-default btn-sm" href="" style="text-decoration: none;" id="auteur" onclick="javascript:visibilite(\'auteursuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</a> ';
+            $content .= '<button type="button" href="" style="text-decoration: none;" id="auteur" onclick="visibilite(\'auteursuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</button>';
         }
     }
     $content .= '</div>
-        <div class="tab-pane" id="revues">
+        <div class="display" id="revues" style="display: none;">
             <h3>' . __('Revues','wp-hal').'</h3>';
     if(!is_null($json->facet_counts->facet_fields->journalIdTitle_fs)  && !empty($json->facet_counts->facet_fields->journalIdTitle_fs)){
-        $content .= '<ul class="revues list-group">';
-        $content .= '<li class="list-group-item">';
         $content .= '<span id="trirevues">';
-        $content .= '<a class="btn btn-default btn-xs" data-placement="bottom" data-toggle="tooltip" data-original-title="Tri Alphabétique" href="" id="trirev" onclick="javascript:toggleSort(this, true, \'rev\', \'revuesuite\', \'trirev\'); return false;" style="font-size:16px;  text-decoration: none;" ><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>';
-        $content .= '<a class="pull-right btn btn-default btn-xs"  data-placement="bottom" data-toggle="tooltip" data-original-title="Tri par Nombre d\'Occurences" href="" id="trinbrev" onclick="javascript:toggleSort(this, false, \'rev\', \'revuesuite\', \'trinbrev\'); return false;" style="font-size:16px;  text-decoration: none;"><span class="glyphicon glyphicon-sort-by-order"></span></a>';
+        $content .= '<button type="button" class="trial" href="" id="trirev" onclick="toggleSort(this, true, \'rev\', \'revuesuite\', \'trirev\'); return false;" style="font-size:16px;  text-decoration: none;" >Tri Alphabétique</button>';
+        $content .= '<button type="button" class="trioc" href="" id="trinbrev" onclick="toggleSort(this, false, \'rev\', \'revuesuite\', \'trinbrev\'); return false;" style="font-size:16px;  text-decoration: none;">Tri Occurrence</button>';
         $content .= '</span>';
-        $content .= '</li>';
+        $content .= '<ul class="revues">';
         $content .= '<div id="rev">';
         $r = 0;
         foreach ($json->facet_counts->facet_fields->journalIdTitle_fs as $res){
@@ -297,7 +286,7 @@ function cv_hal(){
                 break;
             }
             $name = explode(delimiter,$res[0]);
-            $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=journalId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+            $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=journalId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
         }
         $i = 1;
         $content .= '<div id="revuesuite" style="display:none;">';
@@ -309,27 +298,25 @@ function cv_hal(){
                 $i = $i+1;
             } else {
                 $name = explode(delimiter,$res[0]);
-                $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=journalId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+                $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=journalId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
             }
         }
         $content .= '</div>';
         $content .= '</div>';
         $content .= '</ul>';
         if ($r > 10){
-            $content .= '<a class="btn btn-default btn-sm" href="" style="text-decoration: none;" id="revue" onclick="javascript:visibiliterevues(\'revuesuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</a> ';
+            $content .= '<button type="button" href="" style="text-decoration: none;" id="revue" onclick="visibiliterevues(\'revuesuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</button>';
         }
     }
     $content .= '</div>
-        <div class="tab-pane" id="annees">
+        <div class="display" id="annees" style="display: none;">
             <h3>' . __('Année de production','wp-hal').'</h3>';
     if(!is_null($json->facet_counts->facet_fields->producedDateY_i)  && !empty($json->facet_counts->facet_fields->producedDateY_i)){
-        $content .= '<ul class="annees list-group">';
-        $content .= '<li class="list-group-item">';
         $content .= '<span id="triannees">';
-        $content .= '<a class="btn btn-default btn-xs" data-placement="bottom" data-toggle="tooltip" data-original-title="Tri Chronologique" href="" id="trian" onclick="javascript:toggleSort(this, true, \'an\', \'annees\', \'trian\'); return false;" style="font-size:16px;  text-decoration: none;" ><span class="glyphicon glyphicon-sort-by-order"></span></a>';
-        $content .= '<a class="pull-right btn btn-default btn-xs"  data-placement="bottom" data-toggle="tooltip" data-original-title="Tri par Nombre d\'Occurences" href="" id="trinban" onclick="javascript:toggleSort(this, false, \'an\', \'annees\', \'trinban\'); return false;" style="font-size:16px;  text-decoration: none;"><span class="glyphicon glyphicon-sort-by-order"></span></a>';
+        $content .= '<button type="button" class="trial" href="" id="trian" onclick="toggleSort(this, true, \'an\', \'annees\', \'trian\'); return false;" style="font-size:16px;  text-decoration: none;" >Tri Alphabétique</button>';
+        $content .= '<button type="button" class="trioc" href="" id="trinban" onclick="toggleSort(this, false, \'an\', \'annees\', \'trinban\'); return false;" style="font-size:16px;  text-decoration: none;">Tri Occurrence</button>';
         $content .= '</span>';
-        $content .= '</li>';
+        $content .= '<ul class="annees">';
         $content .= '<div id="an">';
 
         rsort($json->facet_counts->facet_fields->producedDateY_i);
@@ -339,7 +326,7 @@ function cv_hal(){
             if ($r > 10){
                 break;
             }
-            $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=producedDateY_i:' . urlencode($res[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $res[0] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+            $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=producedDateY_i:' . urlencode($res[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $res[0] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
         }
         $i = 1;
         $content .= '<div id="anneesuite" style="display:none;">';
@@ -350,27 +337,25 @@ function cv_hal(){
             if ($i < $r){
                 $i = $i+1;
             } else {
-                $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=producedDateY_i:' . urlencode($res[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $res[0] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+                $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=producedDateY_i:' . urlencode($res[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $res[0] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
             }
         }
         $content .= '</div>';
         $content .= '</div>';
         $content .= '</ul>';
         if ($r > 10){
-            $content .= '<a class="btn btn-default btn-sm" href="" style="text-decoration: none;" id="annee" onclick="javascript:visibiliteannee(\'anneesuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</a> ';
+            $content .= '<button type="button" href="" style="text-decoration: none;" id="annee" onclick="visibiliteannee(\'anneesuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</button>';
         }
     }
     $content .= '</div>
-        <div class="tab-pane" id="insts">
+        <div class="display" id="insts" style="display: none;">
             <h3>' . __('Institutions','wp-hal').'</h3>';
     if(!is_null($json->facet_counts->facet_fields->instStructIdName_fs)  && !empty($json->facet_counts->facet_fields->instStructIdName_fs)){
-        $content .= '<ul class="insts list-group">';
-        $content .= '<li class="list-group-item">';
         $content .= '<span id="triinsts">';
-        $content .= '<a class="btn btn-default btn-xs" data-placement="bottom" data-toggle="tooltip" data-original-title="Tri Alphabétique" href="" id="triinst" onclick="javascript:toggleSort(this, true, \'institu\', \'instsuite\', \'triinst\');  return false;" style="font-size:16px;  text-decoration: none;" ><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>';
-        $content .= '<a class="pull-right btn btn-default btn-xs"  data-placement="bottom" data-toggle="tooltip" data-original-title="Tri par Nombre d\'Occurences" href="" id="trinbinst" onclick="javascript:toggleSort(this, false, \'institu\', \'instsuite\', \'trinbinst\'); return false;" style="font-size:16px;  text-decoration: none;"><span class="glyphicon glyphicon-sort-by-order"></span></a>';
+        $content .= '<button type="button" class="trial" href="" id="triinst" onclick="toggleSort(this, true, \'institu\', \'instsuite\', \'triinst\');  return false;" style="font-size:16px;  text-decoration: none;" >Tri Alphabétique</button>';
+        $content .= '<button type="button" class="trioc" href="" id="trinbinst" onclick="toggleSort(this, false, \'institu\', \'instsuite\', \'trinbinst\'); return false;" style="font-size:16px;  text-decoration: none;">Tri Occurrence</button>';
         $content .= '</span>';
-        $content .= '</li>';
+        $content .= '<ul class="insts">';
         $content .= '<div id="institu">';
         $r = 0;
         foreach ($json->facet_counts->facet_fields->instStructIdName_fs as $res){
@@ -379,7 +364,7 @@ function cv_hal(){
                 break;
             }
             $name = explode(delimiter,$res[0]);
-            $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=instStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+            $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=instStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
         }
         $i = 1;
         $content .= '<div id="instsuite" style="display:none;">';
@@ -391,27 +376,25 @@ function cv_hal(){
                 $i = $i+1;
             } else {
                 $name = explode(delimiter,$res[0]);
-                $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=instStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+                $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=instStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
             }
         }
         $content .= '</div>';
         $content .= '</div>';
         $content .= '</ul>';
         if ($r > 10){
-            $content .= '<a class="btn btn-default btn-sm" href="" style="text-decoration: none;" id="inst" onclick="javascript:visibiliteinst(\'instsuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</a> ';
+            $content .= '<button type="button" href="" style="text-decoration: none;" id="inst" onclick="visibiliteinst(\'instsuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</button>';
         }
     }
     $content .= '</div>
-       <div class="tab-pane" id="labs">
+       <div class="display" id="labs" style="display: none;">
             <h3>' . __('Laboratoires','wp-hal').'</h3>';
     if(!is_null($json->facet_counts->facet_fields->labStructIdName_fs) && !empty($json->facet_counts->facet_fields->labStructIdName_fs)){
-        $content .= '<ul class="labs list-group">';
-        $content .= '<li class="list-group-item">';
         $content .= '<span id="trilabs">';
-        $content .= '<a class="btn btn-default btn-xs" data-placement="bottom" data-toggle="tooltip" data-original-title="Tri Alphabétique" href="" id="trilab" onclick="javascript:toggleSort(this, true, \'labo\', \'labsuite\', \'trilab\');  return false;" style="font-size:16px;  text-decoration: none;" ><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>';
-        $content .= '<a class="pull-right btn btn-default btn-xs"  data-placement="bottom" data-toggle="tooltip" data-original-title="Tri par Nombre d\'Occurences" href="" id="trinblab" onclick="javascript:toggleSort(this, false, \'labo\', \'labsuite\', \'trinblab\'); return false;" style="font-size:16px;  text-decoration: none;"><span class="glyphicon glyphicon-sort-by-order"></span></a>';
+        $content .= '<button type="button" class="trial" href="" id="trilab" onclick="toggleSort(this, true, \'labo\', \'labsuite\', \'trilab\');  return false;" style="font-size:16px;  text-decoration: none;" >Tri Alphabétique</button>';
+        $content .= '<button type="button" class="trioc" href="" id="trinblab" onclick="toggleSort(this, false, \'labo\', \'labsuite\', \'trinblab\'); return false;" style="font-size:16px;  text-decoration: none;">Tri Occurrence</button>';
         $content .= '</span>';
-        $content .= '</li>';
+        $content .= '<ul class="labs">';
         $content .= '<div id="labo">';
 
         $r = 0;
@@ -421,7 +404,7 @@ function cv_hal(){
                 break;
             }
             $name = explode(delimiter,$res[0]);
-            $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=labStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+            $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=labStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
         }
         $i = 1;
         $content .= '<div id="labsuite" style="display:none;">';
@@ -433,27 +416,25 @@ function cv_hal(){
                 $i = $i+1;
             } else {
                 $name = explode(delimiter,$res[0]);
-                $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=labStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+                $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=labStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
             }
         }
         $content .= '</div>';
         $content .= '</div>';
         $content .= '</ul>';
         if ($r > 10){
-            $content .= '<a class="btn btn-default btn-sm" href="" style="text-decoration: none;" id="lab" onclick="javascript:visibilitelab(\'labsuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</a> ';
+            $content .= '<button type="button" href="" style="text-decoration: none;" id="lab" onclick="visibilitelab(\'labsuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</button>';
         }
     }
     $content .= '</div>
-       <div class="tab-pane" id="depts">
+       <div class="display" id="depts" style="display: none;">
             <h3>' . __('Départements','wp-hal').'</h3>';
     if(!is_null($json->facet_counts->facet_fields->deptStructIdName_fs) && !empty($json->facet_counts->facet_fields->deptStructIdName_fs)){
-        $content .= '<ul class="depts list-group">';
-        $content .= '<li class="list-group-item">';
         $content .= '<span id="tridept">';
-        $content .= '<a class="btn btn-default btn-xs" data-placement="bottom" data-toggle="tooltip" data-original-title="Tri Alphabétique" href="" id="tridept" onclick="javascript:toggleSort(this, true, \'dpt\', \'deptsuite\', \'tridept\');  return false;" style="font-size:16px;  text-decoration: none;" ><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>';
-        $content .= '<a class="pull-right btn btn-default btn-xs"  data-placement="bottom" data-toggle="tooltip" data-original-title="Tri par Nombre d\'Occurences" href="" id="trinbdept" onclick="javascript:toggleSort(this, false, \'dpt\', \'deptsuite\', \'trinbdept\'); return false;" style="font-size:16px;  text-decoration: none;"><span class="glyphicon glyphicon-sort-by-order"></span></a>';
+        $content .= '<button type="button" class="trial" href="" id="tridept" onclick="toggleSort(this, true, \'dpt\', \'deptsuite\', \'tridept\');  return false;" style="font-size:16px;  text-decoration: none;" >Tri Alphabétique</button>';
+        $content .= '<button type="button" class="trioc" href="" id="trinbdept" onclick="toggleSort(this, false, \'dpt\', \'deptsuite\', \'trinbdept\'); return false;" style="font-size:16px;  text-decoration: none;">Tri Occurrence</button>';
         $content .= '</span>';
-        $content .= '</li>';
+        $content .= '<ul class="depts">';
         $content .= '<div id="dpt">';
         $r = 0;
         foreach ($json->facet_counts->facet_fields->deptStructIdName_fs as $res){
@@ -462,7 +443,7 @@ function cv_hal(){
                 break;
             }
             $name = explode(delimiter,$res[0]);
-            $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=deptStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+            $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=deptStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
         }
         $i = 1;
         $content .= '<div id="deptsuite" style="display:none;">';
@@ -474,27 +455,25 @@ function cv_hal(){
                 $i = $i+1;
             } else {
                 $name = explode(delimiter,$res[0]);
-                $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=deptStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+                $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=deptStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
             }
         }
         $content .= '</div>';
         $content .= '</div>';
         $content .= '</ul>';
         if ($r > 10){
-            $content .= '<a class="btn btn-default btn-sm" href="" style="text-decoration: none;" id="dept" onclick="javascript:visibilitedept(\'deptsuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</a> ';
+            $content .= '<button type="button" href="" style="text-decoration: none;" id="dept" onclick="visibilitedept(\'deptsuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</button>';
         }
     }
     $content .= '</div>
-       <div class="tab-pane" id="equipes">
+       <div class="display" id="equipes" style="display: none;">
             <h3>' . __('Équipes de recherche','wp-hal').'</h3>';
     if(!is_null($json->facet_counts->facet_fields->rteamStructIdName_fs) && !empty($json->facet_counts->facet_fields->rteamStructIdName_fs)){
-        $content .= '<ul class="equipes list-group">';
-        $content .= '<li class="list-group-item">';
         $content .= '<span id="triequipe">';
-        $content .= '<a class="btn btn-default btn-xs" data-placement="bottom" data-toggle="tooltip" data-original-title="Tri Alphabétique" href="" id="triequipe" onclick="javascript:toggleSort(this, true, \'rteam\', \'equipesuite\', \'triequipe\');  return false;" style="font-size:16px;text-decoration: none;" ><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>';
-        $content .= '<a class="pull-right btn btn-default btn-xs"  data-placement="bottom" data-toggle="tooltip" data-original-title="Tri par Nombre d\'Occurences" href="" id="trinbequipe" onclick="javascript:toggleSort(this, false, \'rteam\', \'equipesuite\', \'trinbequipe\'); return false;" style="font-size:16px;  text-decoration: none;"><span class="glyphicon glyphicon-sort-by-order"></span></a>';
+        $content .= '<button type="button" class="trial" href="" id="triequipe" onclick="toggleSort(this, true, \'rteam\', \'equipesuite\', \'triequipe\');  return false;" style="font-size:16px;text-decoration: none;" >Tri Alphabétique</button>';
+        $content .= '<button type="button" class="trioc" href="" id="trinbequipe" onclick="toggleSort(this, false, \'rteam\', \'equipesuite\', \'trinbequipe\'); return false;" style="font-size:16px;  text-decoration: none;">Tri Occurrence</button>';
         $content .= '</span>';
-        $content .= '</li>';
+        $content .= '<ul class="equipes">';
         $content .= '<div id="rteam">';
 
         $r = 0;
@@ -504,7 +483,7 @@ function cv_hal(){
                 break;
             }
             $name = explode(delimiter,$res[0]);
-            $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=rteamStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+            $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=rteamStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
         }
         $i = 1;
         $content .= '<div id="equipesuite" style="display:none;">';
@@ -515,28 +494,25 @@ function cv_hal(){
             if ($i < $r){
                 $i = $i+1;
             } else {
-                $content .= '<li class="test list-group-item" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=rteamStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="badge badge-default">' .$res[1]. '</span></li>';
+                $content .= '<li class="metadata" data-percentage="'.$res[1].'"><a href="'. halv3 .'?q=rteamStructId_i:' . urlencode($name[0]) . "+AND+" .get_option('option_type').':'.get_option('option_idhal').'" target="_blank">' . $name[1] . '</a><span class="nbmetadata">' .$res[1]. '</span></li>';
             }
         }
         $content .= '</div>';
         $content .= '</div>';
         $content .= '</ul>';
         if ($r > 10){
-            $content .= '<a class="btn btn-default btn-sm" href="" style="text-decoration: none;" id="equipe" onclick="javascript:visibiliteequipe(\'equipesuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</a> ';
+            $content .= '<button type="button" href="" style="text-decoration: none;" id="equipe" onclick="visibiliteequipe(\'equipesuite\'); return false;" >' . __('Liste complète','wp-hal'); $content .= '</button>';
         }
     }
     $content .= '</div>
-    <div class="tab-pane active" id="publications">
-         <h3>' . __('Publications','wp-hal');  $content .= '</h3>';
+    <div class="display" id="publications">
+         <h3>' . __('Publications','wp-hal').'</h3>';
+    $content .= '<div class="counter-doc">' . __('Nombre de documents', 'wp-hal');
+    $content .='<h2 class="nbdoc">' . $json->response->numFound . '</h2></div>';
 
     if (get_option('option_groupe')=='grouper'){
 
 //LISTE DES DOCUMENTS PAR GROUPE
-
-        $content .= '<div class="counter-doc">
-' . __('Nombre de documents', 'wp-hal') . '
-<h2 class="nbdoc"><span class="label label-primary">' . $json->grouped->docType_s->matches . '</span></h2><br/>
-</div>';
 
         $content .= '<ul style="list-style-type: none;">';
         for($i=0; $json->grouped->docType_s->groups[$i] != null ; $i++){
@@ -558,11 +534,6 @@ function cv_hal(){
     } elseif(get_option('option_groupe')=='paginer'){
 
 //LISTE DES DOCUMENTS AVEC PAGINATION
-
-        $content .= '<div class="counter-doc">
-' . __('Nombre de documents', 'wp-hal');
-        $content .='<h2 class="nbdoc"><span class="label label-primary">' . $json->response->numFound . '</span></h2><br/>
-</div>';
 
 //--MODULE PAGINATION--//
         $messagesParPage = 10;
@@ -613,7 +584,6 @@ function cv_hal(){
         $suivant= $pageActuelle+1;
         $penultimate = $nombreDePages - 1;
 
-        $content .= '<div class="pagination_module">';
         $content .= '<ul class="pagination">';
 //--BOUTON PRECEDENT--//
         if($pageActuelle == 1){
@@ -679,10 +649,9 @@ function cv_hal(){
             $content .= '<li class="disabled"><a href="#">&raquo;</a></li>';
         }
         $content .= '</ul>';
-        $content .= '</div>';
 //--AFFICHAGE PAGINATION--//
     }
-        $content .='</div>
+    $content .='</div>
     </div>
 </div>';
 
@@ -694,7 +663,7 @@ function cv_hal(){
 }
 
 function wp_adding_style() {
-    wp_register_style('wp-hal-style1', plugins_url('/css/bootstrap.css', __FILE__));
+    //wp_register_style('wp-hal-style1', plugins_url('/css/bootstrap.css', __FILE__));
     wp_register_style('wp-hal-style2', plugins_url('/css/style.css', __FILE__));
     wp_register_style('wp-hal-style3', plugins_url('/css/jquery.jqplot.css', __FILE__));
 
@@ -704,9 +673,10 @@ function wp_adding_style() {
 }
 
 function wp_adding_script() {
-    wp_register_script('wp-hal-script1', plugins_url('/js/bootstrap.js', __FILE__));
+    //wp_register_script('wp-hal-script1', plugins_url('/js/bootstrap.js', __FILE__));
     wp_register_script('wp-hal-script2',plugins_url('/js/highcharts.js', __FILE__));
     wp_register_script('wp-hal-script3',plugins_url('/js/jquery.jqplot.js', __FILE__));
+    wp_register_script('wp-hal-script6',plugins_url('/js/jqplot.highlighter.js', __FILE__));
     wp_register_script('wp-hal-script4',plugins_url('/js/jqplot.pieRenderer.js', __FILE__));
     wp_register_script('wp-hal-script5',plugins_url('/js/cv-hal.js', __FILE__));
 
@@ -716,6 +686,8 @@ function wp_adding_script() {
     wp_enqueue_script('wp-hal-script3');
     wp_enqueue_script('wp-hal-script4');
     wp_enqueue_script('wp-hal-script5');
+    wp_enqueue_script('wp-hal-script6');
+
 
 
     $url = api . '?q=*:*&fq='. get_option('option_type').':('. urlencode(get_option('option_idhal')).')&fl=docid,citationFull_s&facet.field='. lang .'domainAllCodeLabel_fs&facet.field=keyword_s&facet.field=journalIdTitle_fs&facet.field=producedDateY_i&facet.field=authIdLastNameFirstName_fs&facet.mincount=1&facet=true&wt=json&json.nl=arrarr';
@@ -742,11 +714,11 @@ function wp_adding_script() {
         $facetdomain = $json->facet_counts->facet_fields->eu_domainAllCodeLabel_fs;
     }
     if(!is_null($facetdomain)){
-    foreach ($facetdomain as $res){
-        $name = explode(delimiter,$res[0])[1];
-        $value = $res[1];
-        $array[] = array($name,$value);
-    }
+        foreach ($facetdomain as $res){
+            $name = explode(delimiter,$res[0])[1];
+            $value = $res[1];
+            $array[] = array($name,$value);
+        }
     }
     wp_localize_script('wp-hal-script5', 'WPWallSettings', json_encode($array));
     $translation = array ('liste' => __('Liste', 'wp-hal'), 'compl' => __('Liste complète', 'wp-hal'), 'princ' => __('Liste principale', 'wp-hal'), 'graph' => __('Graphique', 'wp-hal'), 'nuage' => __('Nuage de mots', 'wp-hal'));
@@ -888,7 +860,7 @@ class wphal_widget extends WP_widget{
             <label for="<?php echo $this->get_field_id("idhal");?>">Id :</label>
             <input value="<?php echo $instance['idhal'];?>" name="<?php echo $this->get_field_name("idhal");?>" id="<?php echo $this->get_field_id("idhal");?>" class="widefat" type="text"/>
         </p>
-        <?php
+    <?php
     }
 }
 
@@ -992,8 +964,8 @@ function wphal_option() {
                             </tr>
                         </table>
                         <?php
-                         update_option('option_idhal', str_replace(',',' OR ',get_option('option_idhal')));
-                         submit_button(__('Enregistrer','wp-hal'), 'primary large', 'submit', true); ?>
+                        update_option('option_idhal', str_replace(',',' OR ',get_option('option_idhal')));
+                        submit_button(__('Enregistrer','wp-hal'), 'primary large', 'submit', true); ?>
                     </div>
                     <div id="postbox-container-1" class="postbox-container">
 
@@ -1025,3 +997,4 @@ function reset_option() {
     delete_option('option_social2');
     delete_option('option_social3');
 }
+?>
