@@ -56,6 +56,7 @@ You need to create your own page with wordpress and put the shortcode [cv-hal] o
 
 = 1.1 =
 *Release Date - 7 September 2015*
+
 * Bootstrap library deleted
 * New appearance for the plugin
 
