@@ -521,8 +521,8 @@ function cv_hal(){
                     $titre=$jsontype->response->result->doc[$d]->str[1];
                 }
             }
-            $content .= '<li><div class="doc-group"><h3 class="doc-header">' . $titre . '<span class="nbmetadata" style="margin-left:10px;">' . $json->grouped->docType_s->groups[$i]->doclist->numFound .' ' . _n('document','documents',$json->grouped->docType_s->groups[$i]->doclist->numFound,'wp-hal') .'</span></h3>';
-            $content .= '<div class="doc-content">';
+            $content .= '<li><div class="grp-div"><h3>' . $titre . '<span class="nbmetadata" style="margin-left:10px;">' . $json->grouped->docType_s->groups[$i]->doclist->numFound .' ' . _n('document','documents',$json->grouped->docType_s->groups[$i]->doclist->numFound,'wp-hal') .'</span></h3>';
+            $content .= '<div class="grp-content">';
             $content .= '<ul>';
             foreach ($json->grouped->docType_s->groups[$i]->doclist->docs as $result){
                 $content .= '<li>' . $result->citationFull_s . '</li>';

@@ -53,6 +53,11 @@
     overflow: auto;
 }
 
+#grp-content{
+    max-height : 250px;
+    overflow: auto;
+}
+
 
 ul.discipline li{
     list-style: none !important;
