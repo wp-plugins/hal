@@ -508,12 +508,12 @@ function cv_hal(){
     <div class="display" id="publications">
          <h3>' . __('Publications','wp-hal').'</h3>';
     $content .= '<div class="counter-doc">' . __('Nombre de documents', 'wp-hal');
-    $content .='<h2 class="nbdoc">' . $json->response->numFound . '</h2></div>';
 
     if (get_option('option_groupe')=='grouper'){
 
 //LISTE DES DOCUMENTS PAR GROUPE
 
+        $content .='<h2 class="nbdoc">' . $json->grouped->docType_s->matches . '</h2></div>';
         $content .= '<ul style="list-style-type: none;">';
         for($i=0; $json->grouped->docType_s->groups[$i] != null ; $i++){
             for($d=0; $jsontype->response->result->doc[$d] != null; $d++ ){
@@ -521,7 +521,7 @@ function cv_hal(){
                     $titre=$jsontype->response->result->doc[$d]->str[1];
                 }
             }
-            $content .= '<li><div class="doc-group"><h3 class="doc-header">' . $titre . '<small class="doc-nb">' . $json->grouped->docType_s->groups[$i]->doclist->numFound .' ' . _n('document','documents',$json->grouped->docType_s->groups[$i]->doclist->numFound,'wp-hal') .'</small></h3>';
+            $content .= '<li><div class="doc-group"><h3 class="doc-header">' . $titre . '<span class="nbmetadata" style="margin-left:10px;">' . $json->grouped->docType_s->groups[$i]->doclist->numFound .' ' . _n('document','documents',$json->grouped->docType_s->groups[$i]->doclist->numFound,'wp-hal') .'</span></h3>';
             $content .= '<div class="doc-content">';
             $content .= '<ul>';
             foreach ($json->grouped->docType_s->groups[$i]->doclist->docs as $result){
@@ -534,6 +534,8 @@ function cv_hal(){
     } elseif(get_option('option_groupe')=='paginer'){
 
 //LISTE DES DOCUMENTS AVEC PAGINATION
+
+        $content .='<h2 class="nbdoc">' . $json->response->numFound . '</h2></div>';
 
 //--MODULE PAGINATION--//
         $messagesParPage = 10;
