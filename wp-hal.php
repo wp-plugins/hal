@@ -665,30 +665,25 @@ function cv_hal(){
 }
 
 function wp_adding_style() {
-    //wp_register_style('wp-hal-style1', plugins_url('/css/bootstrap.css', __FILE__));
-    wp_register_style('wp-hal-style2', plugins_url('/css/style.css', __FILE__));
-    wp_register_style('wp-hal-style3', plugins_url('/css/jquery.jqplot.css', __FILE__));
+    wp_register_style('wp-hal-style1', plugins_url('/css/style.css', __FILE__));
+    wp_register_style('wp-hal-style2', plugins_url('/css/jquery.jqplot.css', __FILE__));
 
     wp_enqueue_style('wp-hal-style1');
     wp_enqueue_style('wp-hal-style2');
-    wp_enqueue_style('wp-hal-style3');
 }
 
 function wp_adding_script() {
-    //wp_register_script('wp-hal-script1', plugins_url('/js/bootstrap.js', __FILE__));
-    wp_register_script('wp-hal-script2',plugins_url('/js/highcharts.js', __FILE__));
-    wp_register_script('wp-hal-script3',plugins_url('/js/jquery.jqplot.js', __FILE__));
-    wp_register_script('wp-hal-script6',plugins_url('/js/jqplot.highlighter.js', __FILE__));
-    wp_register_script('wp-hal-script4',plugins_url('/js/jqplot.pieRenderer.js', __FILE__));
-    wp_register_script('wp-hal-script5',plugins_url('/js/cv-hal.js', __FILE__));
+    wp_register_script('wp-hal-script1',plugins_url('/js/jquery.jqplot.js', __FILE__));
+    wp_register_script('wp-hal-script2',plugins_url('/js/jqplot.highlighter.js', __FILE__));
+    wp_register_script('wp-hal-script3',plugins_url('/js/jqplot.pieRenderer.js', __FILE__));
+    wp_register_script('wp-hal-script4',plugins_url('/js/cv-hal.js', __FILE__));
+
 
     wp_enqueue_script("jquery");
     wp_enqueue_script('wp-hal-script1');
     wp_enqueue_script('wp-hal-script2');
     wp_enqueue_script('wp-hal-script3');
     wp_enqueue_script('wp-hal-script4');
-    wp_enqueue_script('wp-hal-script5');
-    wp_enqueue_script('wp-hal-script6');
 
 
 
@@ -722,9 +717,9 @@ function wp_adding_script() {
             $array[] = array($name,$value);
         }
     }
-    wp_localize_script('wp-hal-script5', 'WPWallSettings', json_encode($array));
+    wp_localize_script('wp-hal-script4', 'WPWallSettings', json_encode($array));
     $translation = array ('liste' => __('Liste', 'wp-hal'), 'compl' => __('Liste complète', 'wp-hal'), 'princ' => __('Liste principale', 'wp-hal'), 'graph' => __('Graphique', 'wp-hal'), 'nuage' => __('Nuage de mots', 'wp-hal'));
-    wp_localize_script('wp-hal-script5', 'translate', $translation);
+    wp_localize_script('wp-hal-script4', 'translate', $translation);
 }
 
 /**
