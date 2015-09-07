@@ -3,7 +3,7 @@
  * Plugin Name: HAL
  * Plugin URI: http://www.ccsd.cnrs.fr
  * Description: Crée une page qui remonte les publications d'un auteur ou d'une structure en relation avec HAL et un widget des dernières publications d'un auteur ou d'une structure.
- * Version: 1.0
+ * Version: 1.1
  * Author: Baptiste Blondelle
  * Author URI: http://www.ccsd.cnrs.fr
  * Text Domain: wp-hal
