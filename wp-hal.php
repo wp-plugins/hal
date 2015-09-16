@@ -94,9 +94,17 @@ function cv_hal(){
 
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
+    $choix= 0;
+    for ($i=1; $i<10; $i++){
+        if (get_option('option_choix')[$i]!=null){
+            $choix = $choix+1;
+        }
+    }
+
     $content = '<div id="content-plugin">
     <ul id="menu">';
     $content .= '<li><a href="#publications" onclick="displayElem(\'publications\'); return false;" style="font-size:18px; text-decoration: none;">' . __('Publications', 'wp-hal'). '</a></li>';
+    if ($choix!=0){
     $content .= '<li><a href="#filtres" onclick="return false;" style="font-size:18px; text-decoration: none; cursor:default;">' . __('Filtres', 'wp-hal'). '</a>';
     $content .= '<ul id="filtres">';
     if (get_option('option_choix')[1] == 'contact') {
@@ -130,6 +138,7 @@ function cv_hal(){
         $content .= '<li><a href="#equipes" onclick="displayElem(\'equipes\'); return false;" style="margin:1px; text-decoration: none;">' . __('Équipes de recherche', 'wp-hal');
         $content .= '</a></li>';}
     $content .= '</ul></li>';
+    }
     $content .= '</ul><br/><hr>';
 
     $content .= '<div id="meta">
@@ -780,7 +789,11 @@ class wphal_widget extends WP_widget{
             "description" => __("Afficher les dernières publications d'un auteur ou d'une structure.", 'wp-hal')
         );
 
-        $this->WP_widget("hal-publications", __("Publications récentes", 'wp-hal'), $options);
+        parent::__construct(
+            'hal-publications',
+            __("Publications récentes", 'wp-hal'),
+            $options
+        );
     }
 
     /**
