@@ -819,9 +819,9 @@ class wphal_widget extends WP_widget{
         $json = json_decode(curl_exec($ch));
         curl_close($ch);
 
-        $content = '<ul>';
+        $content = '<ul class="ul-widget">';
         for ($i = 0; $i < $num; $i++){
-            $content .= '<li><a href="' . $json->response->docs[$i]->uri_s . '" target="_blank">' . $json->response->docs[$i]->title_s[0] . '</a></li>';
+            $content .= '<li class="li-widget"><a href="' . $json->response->docs[$i]->uri_s . '" target="_blank">' . $json->response->docs[$i]->title_s[0] . '</a></li>';
         }
         $content .= '</ul>';
 

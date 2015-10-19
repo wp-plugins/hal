@@ -60,3 +60,6 @@ You need to create your own page with wordpress and put the shortcode [cv-hal] o
 * Bootstrap library deleted
 * New appearance for the plugin
 
+== Upgrade Notice ==
+
+Nothing for the moment...
