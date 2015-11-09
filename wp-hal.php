@@ -162,7 +162,7 @@ function cv_hal(){
         $content .= '<a href="https://plus.google.com/u/0/+' . get_option('option_social2') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/google-plus.svg" style="width:32px; margin:4px;"/></a>';
     }
     if (get_option('option_social3') != ''){
-        $content .= '<a href="http://sa.linkedin.com/pub/' . get_option('option_social3') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/linkedin.svg" style="width:32px; margin:4px;"/></a></li>';
+        $content .= '<a href="https://www.linkedin.com/in/' . get_option('option_social3') . '" target="_blank"><img src=" ' . plugin_dir_url( __FILE__ ) . 'img/linkedin.svg" style="width:32px; margin:4px;"/></a></li>';
     }
     $content .= '</ul>
         </div>
@@ -970,11 +970,27 @@ function wphal_option() {
                             </tr>
                             <tr>
                                 <th>LinkedIn</th>
-                                <td>http://sa.linkedin.com/pub/<input type="text" name="option_social3" id="option_social3" value="<?php echo get_option('option_social3'); ?>"/><img alt="linkedin" src="<?php echo plugin_dir_url( __FILE__ )  ?>img/linkedin.svg" style="vertical-align:middle; width:32px; margin-left:2px; margin-right:2px;"/></td>
+                                <td>https://www.linkedin.com/in/<input type="text" name="option_social3" id="option_social3" value="<?php echo get_option('option_social3'); ?>"/><img alt="linkedin" src="<?php echo plugin_dir_url( __FILE__ )  ?>img/linkedin.svg" style="vertical-align:middle; width:32px; margin-left:2px; margin-right:2px;"/></td>
                             </tr>
                         </table>
                         <?php
-                        update_option('option_idhal', str_replace(',',' OR ',get_option('option_idhal')));
+                        $verifsolr = explode(',',get_option('option_idhal'));
+                        $numverif = count($verifsolr);
+                        $idhal = '';
+                        if ($numverif<1024){
+                            $idhal = str_replace(',',' OR ',get_option('option_idhal'));
+                        } else {
+                            $listidhal = explode(',',get_option('option_idhal'));
+                            for($i=0;$i<1024;$i++){
+                                if ($i == 0){
+                                    $idhal = $listidhal[$i];
+                                } else {
+                                    $idhal .= ' OR ';
+                                    $idhal .= $listidhal[$i];
+                                }
+                            }
+                        }
+                        update_option('option_idhal', $idhal);
                         submit_button(__('Enregistrer','wp-hal'), 'primary large', 'submit', true); ?>
                     </div>
                     <div id="postbox-container-1" class="postbox-container">
